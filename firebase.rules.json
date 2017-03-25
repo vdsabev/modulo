@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": false,
+
+    // Posts
+    "posts": {
+      "$post": {
+        "title": { ".validate": "newData.isString()" },
+        "content": { ".validate": "newData.isString()" }
+      }
+    }
+  }
+}

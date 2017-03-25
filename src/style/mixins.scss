@@ -1,0 +1,32 @@
+@import '~bootstrap-sass/assets/stylesheets/bootstrap/mixins';
+
+// Vendor prefixes are essential for mixins
+//scss-lint:disable VendorPrefix
+
+// Keyframes
+// http://joshbroton.com/quick-fix-sass-mixins-for-css-keyframe-animations/
+@mixin keyframes($animation) {
+  @-webkit-keyframes #{$animation} {
+    @content;
+  }
+
+  @keyframes #{$animation} {
+    @content;
+  }
+}
+
+// Smooth scrolling
+// http://weblog.west-wind.com/posts/2013/Jun/01/Smoothing-out-div-scrolling-in-Mobile-WebKit-Browsers
+@mixin overflow($horizontal, $vertical) {
+  overflow-x: $horizontal;
+  overflow-y: $vertical;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Transform
+@mixin transform($transform) {
+  -webkit-transform: #{$transform};
+  -ms-transform: #{$transform};
+  transform: #{$transform};
+}
