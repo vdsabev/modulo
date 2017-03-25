@@ -10,10 +10,6 @@
     <meta content="320" name="MobileOptimized">
     <meta content="on" http-equiv="cleartype">
 
-    <base href="/">
-    <link rel="shortcut icon" href="logo.png">
-    <link rel="manifest" href="manifest.json">
-
     <% // Spinner %>
     <style>
       <%
@@ -39,7 +35,7 @@
         margin-top: -<%= spinnerSize / 2 %>px;
         margin-left: -<%= spinnerSize / 2 %>px;
 
-        transition: all 0.3s cubic-bezier(0.33, -0.69, .25, 1);
+        transition: all 0.33s cubic-bezier(0.33, -0.69, .25, 1);
       }
 
       #spinner-view.loaded {
@@ -57,34 +53,43 @@
 
       .spinner .logo {
         stroke: white;
+        stroke-dasharray: 90% 10%;
         stroke-linejoin: round;
         stroke-linecap: round;
         fill: none;
 
         <%= prefixed('animation', `
-        animation: showLogo 1s ease-out;
-        `) %>
-
-        <%= prefixed('animation', `
-        animation-fill-mode: forwards;
+        animation: fadeInLogo 0.5s ease-in, moveLogo 1.5s linear infinite;
         `) %>
       }
 
       <% prefixes.keyframes.forEach((prefix) => { %>
-      @<%= prefix %>keyframes showLogo {
-        from {
+      @<%= prefix %>keyframes fadeInLogo {
+        0% {
           opacity: 0;
-          stroke-dasharray: 0% 100%;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      <% }); %>
+
+      <% prefixes.keyframes.forEach((prefix) => { %>
+      @<%= prefix %>keyframes moveLogo {
+        0% {
           stroke-dashoffset: 0%;
         }
-        to {
-          opacity: 1;
-          stroke-dasharray: 100% 0%;
-          stroke-dashoffset: 0%;
+        100% {
+          stroke-dashoffset: 100%;
         }
       }
       <% }); %>
     </style>
+
+    <base href="/">
+    <link rel="shortcut icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|PT+Serif&amp;subset=cyrillic" rel="stylesheet">
   </head>
 
   <body>

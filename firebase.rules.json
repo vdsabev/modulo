@@ -6,9 +6,15 @@
     // Posts
     "posts": {
       "$post": {
+        "imageUrl": { ".validate": "newData.isString()" },
         "title": { ".validate": "newData.isString()" },
-        "content": { ".validate": "newData.isString()" }
+        "subtitle": { ".validate": "newData.isString()" }
       }
+    },
+
+    // Post Content
+    "postContent": {
+      "$post": { ".validate": "newData.isString()" }
     }
   }
 }

@@ -4,10 +4,16 @@
 html,
 body {
   height: 100%;
+  font-family: 'PT Serif', serif;
 }
 
 body {
   color: $neutral-light;
+}
+
+h1,
+h2 {
+  font-family: 'Oswald', sans-serif;
 }
 
 h1 { font-size: $h1-font-size; }

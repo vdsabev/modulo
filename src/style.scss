@@ -1,3 +1,13 @@
 @import 'style/reset';
 @import 'style/global';
 @import 'style/animations';
+
+@import 'style/variables';
+
+// Modify container dimensions
+// scss-lint:disable IdSelector
+#container {
+  margin: 0 auto;
+  width: $sm-max;
+  max-width: 100%;
+}
