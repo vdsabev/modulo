@@ -1,5 +1,7 @@
 # Modulo One
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/vdsabev/modulo.svg)](https://greenkeeper.io/)
+
 # License
 Copyright (c) 2017 Vladimir Sabev
 
