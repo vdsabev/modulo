@@ -12,7 +12,8 @@ body {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: 'Oswald', sans-serif;
 }
 
@@ -22,6 +23,23 @@ h3 { font-size: $h3-font-size; }
 h4 { font-size: $h4-font-size; }
 h5 { font-size: $h5-font-size; }
 h6 { font-size: $h6-font-size; }
+
+a {
+  transition: border $animation-duration $animation-easing,
+              color $animation-duration $animation-easing;
+
+  border-bottom: 0px solid transparent;
+  color: $neutral-dark;
+
+  &:hover {
+    border-bottom: 4px solid $primary-light;
+    color: $neutral;
+  }
+
+  &:visited {
+    color: $neutral-darker;
+  }
+}
 
 .relative {
   position: relative;

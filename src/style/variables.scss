@@ -1,10 +1,15 @@
 // Colors
-$foreground-dark: #161617;
-
-$neutral-light: #ffffff;
+$neutral-lighter: #ffffff;
+$neutral-light: #ecf0f1;
+$neutral: #bdc3c7;
+$neutral-dark: darken($neutral, 10%);
+$neutral-darker: darken($neutral, 30%);
 
 $primary: #2c3e50;
+$primary-lighter: lighten($primary, 20%);
+$primary-light: lighten($primary, 10%);
 $primary-dark: darken($primary, 10%);
+$primary-darker: darken($primary, 15%);
 
 $danger: #db4437;
 $danger-dark: darken($danger, 10%);
