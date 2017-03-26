@@ -1,7 +1,8 @@
 import './style.scss';
 
-import { section, article, h1, img, div } from 'compote/html';
+import { section, article, h1, img, div, small } from 'compote/html';
 
+import { ActionDate } from '../action-date';
 import { AspectRatioContainer } from '../aspect-ratio-container';
 import { Actions } from '../actions';
 import { flex } from '../flex';
@@ -14,6 +15,7 @@ export class Post extends Model<Post> {
   imageUrl?: string;
   title?: string;
   subtitle?: string;
+  created?: number;
 }
 
 export function getPosts() {
@@ -38,7 +40,8 @@ export const PostItem = (post: Post) => (
     ),
     div({ className: 'flex-item', style: flex(1) }, [
       h1({ className: 'post-item-title' }, post.title),
-      div(toHTML(post.subtitle))
+      div({ className: 'post-item-subtitle' }, <any>toHTML(post.subtitle)),
+      small(ActionDate(new Date(post.created)))
     ])
   ])
 );
