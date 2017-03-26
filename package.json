@@ -19,7 +19,8 @@
     "lodash": "4.17.4",
     "marked": "0.3.6",
     "mithril": "1.0.1",
-    "redux": "3.6.0"
+    "redux": "3.6.0",
+    "timeago.js": "betahaus-sofia/timeago.js"
   },
   "devDependencies": {
     "@types/jest": "19.2.2",
