@@ -1,20 +1,19 @@
-@import 'mixins';
 @import 'variables';
 
 .fade-in-animation {
-  @include animation(fadeIn $animation-duration $animation-easing);
+  animation: fadeIn $animation-duration $animation-easing;
 }
 
-@include keyframes(fadeIn) {
+@keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 .fade-out-animation {
-  @include animation(fadeOut $animation-duration $animation-easing);
+  animation: fadeOut $animation-duration $animation-easing;
 }
 
-@include keyframes(fadeOut) {
+@keyframes fadeOut {
   from { opacity: 1; }
   to { opacity: 0; }
 }

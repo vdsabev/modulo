@@ -2,9 +2,10 @@ import './style.scss';
 
 import { section, article, h1, img, div } from 'compote/html';
 
+import { AspectRatioContainer } from '../aspect-ratio-container';
 import { Actions } from '../actions';
 import { flex } from '../flex';
-import { html } from '../marked';
+import { toHTML } from '../marked';
 import Model from '../model';
 import { store } from '../store';
 
@@ -27,19 +28,19 @@ export function addPost(postChildSnapshot: FirebaseSnapshot<Post>) {
 }
 
 export const PostItem = (post: Post) => (
-  article({ className: 'post-item fade-in-animation' },
-    div({ className: 'flex-row-md justify-content-start align-items-start' }, [
-      div({ className: 'flex-item', style: flex('1 1 50%') },
+  article({ className: 'post-item flex-row-md justify-content-start align-items-stretch fade-in-animation' }, [
+    div({ className: 'flex-item', style: flex(1) },
+      AspectRatioContainer({ x: 4, y: 3 },
         // NOTE: The img tag needs to be wrapped with a div, otherwise the flex box breaks in Chrome
         // http://codepen.io/vdsabev/pen/mWjpXN
-        img({ src: post.imageUrl })
-      ),
-      div({ className: 'flex-item', style: flex('1 1 50%') }, [
-        h1({ className: 'post-item-title' }, post.title),
-        div(html(post.subtitle))
-      ])
+        img({ className: 'absolute stretch', src: post.imageUrl })
+      )
+    ),
+    div({ className: 'flex-item', style: flex(1) }, [
+      h1({ className: 'post-item-title' }, post.title),
+      div(toHTML(post.subtitle))
     ])
-  )
+  ])
 );
 
 export const PostList = (posts: Post[]) => (

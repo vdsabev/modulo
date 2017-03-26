@@ -1,19 +1,14 @@
 @import '../style/variables';
 
-// Mixins
-// Vendor prefixes are necessary for mixins
-// scss-lint:disable VendorPrefix
-@mixin flex($arguments...) {
-  display: -webkit-box;      // OLD - iOS 6-, Safari 3.1-6
-  display: -moz-box;         // OLD - Firefox 19- (buggy but mostly works)
-  display: -ms-flexbox;      // TWEENER - IE 10
-  display: -webkit-flex;     // NEW - Chrome
-  display: flex;             // NEW, Spec - Opera 12.1, Firefox 20+
-}
+$flex-item-spacing: 5px !default;
 
+$sm-min: 768px !default;
+$md-min: 992px !default;
+$lg-min: 1200px !default;
+$xl-min: 1600px !default;
+
+// Mixins
 @mixin flex-direction($arguments...) {
-  -webkit-flex-direction: $arguments;
-  -ms-flex-direction: $arguments;
   flex-direction: $arguments;
 
   // Fix Firefox overflow issues:
@@ -22,125 +17,82 @@
   min-height: 0;
 }
 
-@mixin flex-wrap($arguments...) {
-  -moz-box-wrap: $arguments;
-  -webkit-box-wrap: $arguments;
-  -webkit-flex-wrap: $arguments;
-  -ms-flexbox-wrap: $arguments;
-  -ms-flex-wrap: $arguments;
-  flex-wrap: $arguments;
-}
-
-@mixin justify-content($arguments...) {
-  -webkit-justify-content: $arguments;
-  -ms-justify-content: $arguments;
-  justify-content: $arguments;
-}
-
-@mixin align-items($arguments...) {
-  -webkit-align-items: $arguments;
-  -ms-align-items: $arguments;
-  align-items: $arguments;
-}
-
-@mixin align-self($arguments...) {
-  -webkit-align-self: $arguments;
-  -ms-align-self: $arguments;
-  align-self: $arguments;
-}
-// scss-lint:enable VendorPrefix
-
 // Classes
 // https://css-tricks.com/using-flexbox/
-// display
-.flex {
-  @include flex();
+// flex-direction
+.flex-row,
+.flex-row-reverse,
+.flex-column,
+.flex-column-reverse {
+  display: flex;
 }
 
-// flex-direction
 .flex-row {
-  @include flex();
   @include flex-direction(row);
 }
 
 .flex-row-reverse {
-  @include flex();
   @include flex-direction(row-reverse);
 }
 
 .flex-column {
-  @include flex();
   @include flex-direction(column);
 }
 
 .flex-column-reverse {
-  @include flex();
   @include flex-direction(column-reverse);
 }
 
 // flex-wrap
-.flex-nowrap { @include flex-wrap(nowrap); }
-.flex-wrap { @include flex-wrap(wrap); }
-.flex-wrap-reverse { @include flex-wrap(wrap-reverse); }
+.flex-nowrap { flex-wrap: nowrap; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-wrap-reverse { flex-wrap: wrap-reverse; }
 
 // justify-content
-.justify-content-start { @include justify-content(flex-start); }
-.justify-content-end { @include justify-content(flex-end); }
-.justify-content-center { @include justify-content(center); }
-.justify-content-space-between { @include justify-content(space-between); }
-.justify-content-space-around { @include justify-content(space-around); }
+.justify-content-start { justify-content: flex-start; }
+.justify-content-end { justify-content: flex-end; }
+.justify-content-center { justify-content: center; }
+.justify-content-space-between { justify-content: space-between; }
+.justify-content-space-around { justify-content: space-around; }
 
 // align-items
-.align-items-start { @include align-items(flex-start); }
-.align-items-end { @include align-items(flex-end); }
-.align-items-center { @include align-items(center); }
-.align-items-stretch { @include align-items(stretch); }
-.align-items-baseline { @include align-items(baseline); }
+.align-items-start { align-items: flex-start; }
+.align-items-end { align-items: flex-end; }
+.align-items-center { align-items: center; }
+.align-items-stretch { align-items: stretch; }
+.align-items-baseline { align-items: baseline; }
 
 // align-self
-.align-self-start { @include align-self(flex-start); }
-.align-self-end { @include align-self(flex-end); }
-.align-self-center { @include align-self(center); }
-.align-self-stretch { @include align-self(stretch); }
-.align-self-baseline { @include align-self(baseline); }
+.align-self-start { align-self: flex-start; }
+.align-self-end { align-self: flex-end; }
+.align-self-center { align-self: center; }
+.align-self-stretch { align-self: stretch; }
+.align-self-baseline { align-self: baseline; }
 
 // Responsive classes
 .flex-row-xs,
 .flex-row-sm,
 .flex-row-md,
-.flex-row-lg {
-  @include flex();
+.flex-row-lg,
+.flex-row-xl {
+  display: flex;
 }
 
 .flex-row-xs {
   @include flex-direction(row);
-  margin: 0 (-$flex-item-spacing);
-
-  > .flex-item {
-    padding: 0 $flex-item-spacing;
-  }
 }
 
 @mixin flex-row-responsive($size) {
   @media (min-width: $size) {
     @include flex-direction(row);
-    margin: 0 (-$flex-item-spacing);
-
-    > .flex-item {
-      padding: 0 $flex-item-spacing;
-    }
   }
 }
 
 .flex-row-sm,
 .flex-row-md,
-.flex-row-lg {
+.flex-row-lg,
+.flex-row-xl {
   @include flex-direction(column);
-  margin: -$flex-item-spacing 0;
-
-  > .flex-item {
-    padding: $flex-item-spacing 0;
-  }
 }
 
 .flex-row-sm {
@@ -153,4 +105,12 @@
 
 .flex-row-lg {
   @include flex-row-responsive($lg-min);
+}
+
+.flex-row-xl {
+  @include flex-row-responsive($xl-min);
+}
+
+.flex-item {
+  margin: $flex-item-spacing;
 }

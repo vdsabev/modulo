@@ -1,5 +1,7 @@
+const autoprefixer = require('autoprefixer');
 const path = require('path');
 const env = require('var');
+
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -31,6 +33,7 @@ module.exports = {
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader' },
+          { loader: 'postcss-loader' },
           { loader: 'sass-loader' }
         ]
       },
@@ -47,6 +50,13 @@ module.exports = {
       'process.VERSION': JSON.stringify(packageJson.version),
       'process.env': JSON.stringify(env)
     }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: () => [
+          autoprefixer({ browsers: ['last 3 versions', '> 1%'] })
+        ]
+      }
+    }),
     new HtmlWebpackPlugin({ template: './src/index.ejs' })
-  ]
+  ],
 };
