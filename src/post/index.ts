@@ -2,7 +2,7 @@ import './style.scss';
 
 import { section, article, h1, img, div, small } from 'compote/html';
 
-import { ActionDate } from '../action-date';
+import { Timeago } from '../timeago';
 import { AspectRatioContainer } from '../aspect-ratio-container';
 import { Actions } from '../actions';
 import { flex } from '../flex';
@@ -39,9 +39,9 @@ export const PostItem = (post: Post) => (
       )
     ),
     div({ className: 'flex-item', style: flex(1) }, [
-      h1({ className: 'post-item-title' }, post.title),
+      h1({ className: 'post-item-title' }, <any>toHTML(post.title)),
       div({ className: 'post-item-subtitle' }, <any>toHTML(post.subtitle)),
-      small(ActionDate(new Date(post.created)))
+      small(Timeago(new Date(post.created)))
     ])
   ])
 );

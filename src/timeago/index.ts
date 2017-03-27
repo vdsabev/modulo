@@ -3,7 +3,7 @@ import timeago from 'timeago.js';
 
 import { Clock } from '../clock';
 
-export const ActionDate = (date: Date) => (
+export const Timeago = (date: Date) => (
   div({
     className: 'flex-row justify-content-start align-items-center',
     title: date.toLocaleString()
