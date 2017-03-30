@@ -21,7 +21,6 @@
           transform: ['-webkit-', '-ms-', '']
         };
         const prefixed = (type, value, separator) => prefixes[type].map((prefix) => prefix + value.trim()).join(separator || ' ');
-        const round = (value) => Math.round(value * 100) / 100;
       %>
 
       body {

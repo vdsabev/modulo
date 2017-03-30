@@ -1,12 +1,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src",
+    "alwaysStrict": true,
     "experimentalDecorators": true,
-    "module": "commonjs",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "suppressImplicitAnyIndexErrors": false,
+
+    "baseUrl": "src",
+    "module": "commonjs",
     "target": "ES5"
   },
   "exclude": [

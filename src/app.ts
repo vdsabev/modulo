@@ -5,6 +5,7 @@ import './style.scss';
 import { Compote } from 'compote/html';
 import throttle = require('lodash/throttle');
 
+import { initializeFirebase } from './firebase';
 import { getPosts, PostList } from './post';
 import { store } from './store';
 
@@ -18,16 +19,6 @@ function initialize() {
   registerServiceWorker();
   subscribeToStore();
   getPosts();
-}
-
-function initializeFirebase() {
-  firebase.initializeApp({
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.FIREBASE_DATABASE_URL,
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
-  });
 }
 
 function registerServiceWorker() {
