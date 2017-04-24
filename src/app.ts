@@ -2,14 +2,13 @@ import './assets/logo.png';
 import './manifest.json';
 import './style.scss';
 
+import { redraw } from 'mithril';
 import { Compote } from 'compote/html';
-import throttle = require('lodash/throttle');
 
 import { initializeFirebase } from './firebase';
-import { getPosts, PostList } from './post';
+import { initializeRouter } from './router';
 import { store } from './store';
 
-const container = document.querySelector('#container');
 const spinnerView = document.querySelector('#spinner-view');
 
 initialize();
@@ -17,8 +16,8 @@ initialize();
 function initialize() {
   initializeFirebase();
   registerServiceWorker();
+  initializeRouter();
   subscribeToStore();
-  getPosts();
 }
 
 function registerServiceWorker() {
@@ -28,17 +27,10 @@ function registerServiceWorker() {
 }
 
 function subscribeToStore() {
-  store.subscribe(throttle(render, 10));
+  store.subscribe(redraw);
 
   const unsubscribeSpinnerView = store.subscribe(() => {
     spinnerView.classList.add('loaded');
     unsubscribeSpinnerView();
   });
-}
-
-function render() {
-  const { posts } = store.getState();
-  Compote.render(container, [
-    PostList(posts)
-  ]);
 }

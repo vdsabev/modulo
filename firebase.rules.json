@@ -8,6 +8,7 @@
       "$post": {
         "imageUrl": { ".validate": "newData.isString()" },
         "title": { ".validate": "newData.isString()" },
+        "slug": { ".validate": "newData.isString()" },
         "subtitle": { ".validate": "newData.isString()" },
         "created": { ".validate": "newData.val() === now" }
       }
