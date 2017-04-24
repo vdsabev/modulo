@@ -1,10 +1,10 @@
 // http://jaydenseric.com/blog/forget-normalize-or-resets-lay-your-own-css-foundation
-// scss-lint:disable VendorPrefix
+// sass-lint:disable no-vendor-prefixes
+
 html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
-// scss-lint:enable VendorPrefix
 
 body {
   margin: 0;

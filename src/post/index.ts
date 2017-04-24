@@ -1,11 +1,11 @@
 import './style.scss';
 
 import { section, article, h1, img, div, small } from 'compote/html';
+import { Timeago } from 'compote/components/timeago';
 
-import { Timeago } from '../timeago';
-import { AspectRatioContainer } from '../aspect-ratio-container';
+import { AspectRatioContainer } from 'compote/components/aspect-ratio-container';
 import { Actions } from '../actions';
-import { flex } from '../flex';
+import { flex } from 'compote/components/flex';
 import { toHTML } from '../marked';
 import Model from '../model';
 import { store } from '../store';

@@ -3,10 +3,10 @@
 @import 'style/animations';
 @import 'style/variables';
 
-@import 'flex/style';
+@import '~compote/components/flex/style';
 
 // Modify container dimensions
-// scss-lint:disable IdSelector
+// sass-lint:disable no-ids
 #container {
   margin: 0 auto;
   width: $sm-max;

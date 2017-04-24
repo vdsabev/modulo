@@ -15,12 +15,11 @@
     "@types/marked": "0.0.28",
     "@types/mithril": "0.0.31",
     "bootstrap-sass": "3.3.7",
-    "compote": "0.11.1",
+    "compote": "0.12.0",
     "lodash": "4.17.4",
     "marked": "0.3.6",
     "mithril": "1.0.1",
-    "redux": "3.6.0",
-    "timeago.js": "betahaus-sofia/timeago.js"
+    "redux": "3.6.0"
   },
   "devDependencies": {
     "@types/jest": "19.2.2",
