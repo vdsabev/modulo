@@ -46,7 +46,8 @@ export function loadPostBySlug(slug: string) {
 }
 
 export const PostItem = (post: Post) => (
-  article({ key: post ? post.id : null, className: 'post-item fade-in-animation' }, [
+  post == null ? null :
+  article({ key: post.id, className: 'post-item fade-in-animation' }, [
     div({ className: 'flex-row-md justify-content-start align-items-stretch' }, [
       div({ className: 'flex-item', style: flex(1) },
         AspectRatioContainer({ x: 4, y: 3 },

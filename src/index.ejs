@@ -14,7 +14,7 @@
     <style>
       <%
         const primary = '#2c3e50';
-        const spinnerSize = 300;
+        const spinnerSize = 200;
         const prefixes = {
           animation: ['-webkit-', ''],
           keyframes: ['-webkit-', ''],
@@ -27,30 +27,53 @@
         background: <%= primary %>;
       }
 
+      #header {
+        position: absolute;
+        top: -<%= spinnerSize / 2 %>px;
+        right: 0;
+        left: 0;
+        height: <%= spinnerSize / 2 %>px;
+
+        transition: top 0.33s cubic-bezier(0.33, -0.69, .25, 1);
+      }
+
+      #header.loaded {
+        top: 0;
+      }
+
+      #container {
+        padding-top: <%= spinnerSize / 2 %>px;
+      }
+
       #spinner-view {
         position: absolute;
         top: 50%;
         left: 50%;
-        margin-top: -<%= spinnerSize / 2 %>px;
+        margin-top: -<%= spinnerSize / 4 %>px;
         margin-left: -<%= spinnerSize / 2 %>px;
 
         transition: all 0.33s cubic-bezier(0.33, -0.69, .25, 1);
       }
 
+      #spinner-view:hover {
+        border: 0;
+      }
+
       #spinner-view.loaded {
-        opacity: 0;
-
-        <%= prefixed('transform', `
-        transform: scale(0);
-        `) %>
+        top: 0;
+        margin-top: 0;
       }
 
-      .spinner {
+      #spinner-view.loaded #logo {
+        animation: none !important;
+      }
+
+      #spinner {
         width: <%= spinnerSize %>px;
-        height: <%= spinnerSize %>px;
+        height: <%= spinnerSize / 2 %>px;
       }
 
-      .spinner .logo {
+      #logo {
         stroke: white;
         stroke-dasharray: 45% 5% 45% 5%;
         stroke-linejoin: round;
@@ -92,16 +115,17 @@
   </head>
 
   <body>
+    <header id="header"></header>
     <div id="container"></div>
 
     <% // Spinner displayed until the application loads %>
-    <div id="spinner-view">
-      <svg class="spinner" viewBox="0, 0, <%= spinnerSize %>, <%= spinnerSize %>">
-        <text class="logo" x="<%= spinnerSize / 2 - 100 %>" y="<%= spinnerSize / 2 + 20 %>" font-size="72" font-family="sans-serif">
+    <a id="spinner-view" href="/" onclick="event.preventDefault();">
+      <svg id="spinner" viewBox="0, 0, <%= spinnerSize %>, <%= spinnerSize / 2 %>">
+        <text id="logo" x="<%= spinnerSize / 2 - 100 %>" y="<%= spinnerSize / 4 + 25 %>" font-size="72" font-family="sans-serif">
           mod 1
         </text>
       </svg>
-    </div>
+    </a>
 
     <% // Firebase %>
     <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>

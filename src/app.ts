@@ -3,13 +3,13 @@ import './manifest.json';
 import './style.scss';
 
 import { redraw } from 'mithril';
-import { Compote } from 'compote/html';
 
 import { initializeFirebase } from './firebase';
-import { initializeRouter } from './router';
+import { initializeRouter, setRouteIfNew } from './router';
 import { store } from './store';
 
-const spinnerView = document.querySelector('#spinner-view');
+const header = document.querySelector('#header');
+const spinnerView = <HTMLAnchorElement>document.querySelector('#spinner-view');
 
 initialize();
 
@@ -29,8 +29,18 @@ function registerServiceWorker() {
 function subscribeToStore() {
   store.subscribe(redraw);
 
-  const unsubscribeSpinnerView = store.subscribe(() => {
-    spinnerView.classList.add('loaded');
-    unsubscribeSpinnerView();
+  const unsubscribeContainers = store.subscribe(() => {
+    applicationLoaded();
+    unsubscribeContainers();
   });
+}
+
+function applicationLoaded() {
+  header.classList.add('loaded');
+  spinnerView.classList.add('loaded');
+
+  spinnerView.onclick = (e) => {
+    e.preventDefault();
+    setRouteIfNew(spinnerView.getAttribute('href'));
+  };
 }

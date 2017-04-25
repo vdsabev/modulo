@@ -24,3 +24,9 @@ export function initializeRouter() {
     }
   });
 }
+
+export function setRouteIfNew(newRoute: string) {
+  if (newRoute !== route.get()) {
+    route.set(newRoute);
+  }
+}

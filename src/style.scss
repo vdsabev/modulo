@@ -5,10 +5,13 @@
 
 @import '~compote/components/flex/style';
 
-// Modify container dimensions
 // sass-lint:disable no-ids
 #container {
   margin: 0 auto;
   width: $sm-max;
   max-width: 100%;
+}
+
+#header {
+  background: $primary-dark;
 }
