@@ -14,7 +14,7 @@
     <style>
       <%
         const primary = '#2c3e50';
-        const spinnerSize = 200;
+        const spinnerSize = 300;
         const prefixes = {
           animation: ['-webkit-', ''],
           keyframes: ['-webkit-', ''],
@@ -28,11 +28,11 @@
       }
 
       #header {
-        position: absolute;
-        top: -<%= spinnerSize / 2 %>px;
+        position: fixed;
+        top: -<%= spinnerSize / 4 %>px;
         right: 0;
         left: 0;
-        height: <%= spinnerSize / 2 %>px;
+        height: <%= spinnerSize / 4 %>px;
 
         transition: top 0.33s cubic-bezier(0.33, -0.69, .25, 1);
       }
@@ -42,11 +42,11 @@
       }
 
       #container {
-        padding-top: <%= spinnerSize / 2 %>px;
+        padding-top: <%= spinnerSize / 4 %>px;
       }
 
       #spinner-view {
-        position: absolute;
+        position: fixed;
         top: 50%;
         left: 50%;
         margin-top: -<%= spinnerSize / 4 %>px;
@@ -62,15 +62,19 @@
       #spinner-view.loaded {
         top: 0;
         margin-top: 0;
-      }
-
-      #spinner-view.loaded #logo {
-        animation: none !important;
+        margin-left: -<%= spinnerSize / 4 %>px;
       }
 
       #spinner {
         width: <%= spinnerSize %>px;
         height: <%= spinnerSize / 2 %>px;
+
+        transition: width 0.33s cubic-bezier(0.33, -0.69, .25, 1), height 0.33s cubic-bezier(0.33, -0.69, .25, 1);
+      }
+
+      #spinner-view.loaded #spinner {
+        width: <%= spinnerSize / 2 %>px;
+        height: <%= spinnerSize / 4 %>px;
       }
 
       #logo {
@@ -85,25 +89,21 @@
         `) %>
       }
 
+      #spinner-view.loaded #logo {
+        animation: none;
+      }
+
       <% prefixes.keyframes.forEach((prefix) => { %>
       @<%= prefix %>keyframes fadeInLogo {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
+        from { opacity: 0; }
+        to { opacity: 1; }
       }
       <% }); %>
 
       <% prefixes.keyframes.forEach((prefix) => { %>
       @<%= prefix %>keyframes moveLogo {
-        0% {
-          stroke-dashoffset: 0%;
-        }
-        100% {
-          stroke-dashoffset: 100%;
-        }
+        from { stroke-dashoffset: 0%; }
+        to { stroke-dashoffset: 100%; }
       }
       <% }); %>
     </style>
@@ -115,17 +115,17 @@
   </head>
 
   <body>
-    <header id="header"></header>
     <div id="container"></div>
 
-    <% // Spinner displayed until the application loads %>
-    <a id="spinner-view" href="/" onclick="event.preventDefault();">
-      <svg id="spinner" viewBox="0, 0, <%= spinnerSize %>, <%= spinnerSize / 2 %>">
-        <text id="logo" x="<%= spinnerSize / 2 - 100 %>" y="<%= spinnerSize / 4 + 25 %>" font-size="72" font-family="sans-serif">
-          mod 1
-        </text>
-      </svg>
-    </a>
+    <header id="header">
+      <a id="spinner-view" href="/" onclick="event.preventDefault();">
+        <svg id="spinner" viewBox="0, 0, 200, 100">
+          <text id="logo" x="0" y="75" font-size="72" font-family="sans-serif">
+            mod 1
+          </text>
+        </svg>
+      </a>
+    </header>
 
     <% // Firebase %>
     <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
