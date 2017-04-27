@@ -15,7 +15,9 @@
     "@types/marked": "0.0.28",
     "@types/mithril": "1.1.1",
     "bootstrap-sass": "3.3.7",
-    "compote": "0.12.1",
+    "compote": "0.14.0",
+    "firebase": "3.9.0",
+    "firebaseui": "1.0.1",
     "marked": "0.3.6",
     "mithril": "1.1.1",
     "redux": "3.6.0"

@@ -1,12 +1,13 @@
 import './style.scss';
 
 import { section, article, a, img, div, small } from 'compote/html';
+import { AspectRatioContainer } from 'compote/components/aspect-ratio-container';
+import { flex } from 'compote/components/flex';
 import { Timeago } from 'compote/components/timeago';
+import { database } from 'firebase';
 import { route } from 'mithril';
 
-import { AspectRatioContainer } from 'compote/components/aspect-ratio-container';
 import { Actions } from '../actions';
-import { flex } from 'compote/components/flex';
 import { toHTML } from '../marked';
 import Model from '../model';
 import { store } from '../store';
@@ -24,22 +25,22 @@ export class Post extends Model<Post> {
 export function loadPosts() {
   store.dispatch({ type: Actions.RESET_POSTS });
 
-  const postsRef = firebase.database().ref('posts');
+  const postsRef = database().ref('posts');
   postsRef.off('child_added');
-  postsRef.on('child_added', (postChildSnapshot: FirebaseSnapshot<Post>) => {
+  postsRef.on('child_added', (postChildSnapshot: DataSnapshot<Post>) => {
     const post = new Post({ id: postChildSnapshot.key }, postChildSnapshot.val());
     store.dispatch({ type: Actions.POST_ADDED, post });
   });
 }
 
-export function loadPostBySlug(slug: string) {
-  firebase.database().ref(`posts`).orderByChild('slug').equalTo(slug).once('value').then((postsSnapshot: FirebaseSnapshot<Record<string, Post>>) => {
+export function loadPostBySlug({ slug }: Record<string, string>) {
+  database().ref(`posts`).orderByChild('slug').equalTo(slug).once('value').then((postsSnapshot: DataSnapshot<Record<string, Post>>) => {
     const posts = postsSnapshot.val();
     const [id] = Object.keys(posts);
     const post = new Post({ id }, posts[id]);
     store.dispatch({ type: Actions.POST_LOADED, post });
 
-    firebase.database().ref(`postContent/${post.id}`).once('value').then((postContentSnapshot: FirebaseSnapshot<string>) => {
+    database().ref(`postContent/${post.id}`).once('value').then((postContentSnapshot: DataSnapshot<string>) => {
       store.dispatch({ type: Actions.POST_CONTENT_LOADED, content: postContentSnapshot.val() });
     });
   });

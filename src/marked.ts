@@ -1,4 +1,4 @@
-import marked = require('marked');
+import * as marked from 'marked';
 import { trust } from 'mithril';
 
 export const isLocal = (href: string): boolean => href.indexOf(`//${window.location.host}`) !== -1;

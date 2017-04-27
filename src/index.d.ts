@@ -1,9 +1,8 @@
-declare var firebase: any;
+/// <reference path="../node_modules/firebase/firebase.d.ts" />
 
-type FirebaseSnapshot<T> = {
-  key: string
+interface DataSnapshot<T> extends firebase.database.DataSnapshot {
   val(): T;
-};
+}
 
 declare var process: {
   VERSION: string

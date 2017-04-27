@@ -8,9 +8,6 @@ import { initializeFirebase } from './firebase';
 import { initializeRouter, setRouteIfNew } from './router';
 import { store } from './store';
 
-const header = document.querySelector('#header');
-const spinnerView = <HTMLAnchorElement>document.querySelector('#spinner-view');
-
 initialize();
 
 function initialize() {
@@ -36,9 +33,11 @@ function subscribeToStore() {
 }
 
 function applicationLoaded() {
+  const header = document.querySelector('#header');
   header.classList.add('loaded');
-  spinnerView.classList.add('loaded');
 
+  const spinnerView = <HTMLAnchorElement>document.querySelector('#spinner-view');
+  spinnerView.classList.add('loaded');
   spinnerView.onclick = (e) => {
     e.preventDefault();
     setRouteIfNew(spinnerView.getAttribute('href'));
