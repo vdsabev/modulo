@@ -1,7 +1,7 @@
+import { logger } from 'compote/components/logger';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
 import { Actions } from './actions';
-import { logger } from './logger';
 import { Post } from './post';
 
 export type State = {

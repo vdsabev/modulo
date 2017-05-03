@@ -3,13 +3,15 @@ import './style.scss';
 import { section, article, a, img, div, small } from 'compote/html';
 import { AspectRatioContainer } from 'compote/components/aspect-ratio-container';
 import { flex } from 'compote/components/flex';
+import { Model } from 'compote/components/model';
 import { Timeago } from 'compote/components/timeago';
-import { database } from 'firebase';
 import { route } from 'mithril';
+
+import * as firebase from 'firebase/app';
+import 'firebase/database';
 
 import { Actions } from '../actions';
 import { toHTML } from '../marked';
-import Model from '../model';
 import { store } from '../store';
 
 export class Post extends Model<Post> {
@@ -25,7 +27,7 @@ export class Post extends Model<Post> {
 export function loadPosts() {
   store.dispatch({ type: Actions.RESET_POSTS });
 
-  const postsRef = database().ref('posts');
+  const postsRef = firebase.database().ref('posts');
   postsRef.off('child_added');
   postsRef.on('child_added', (postChildSnapshot: DataSnapshot<Post>) => {
     const post = new Post({ id: postChildSnapshot.key }, postChildSnapshot.val());
@@ -34,13 +36,13 @@ export function loadPosts() {
 }
 
 export function loadPostBySlug({ slug }: Record<string, string>) {
-  database().ref(`posts`).orderByChild('slug').equalTo(slug).once('value').then((postsSnapshot: DataSnapshot<Record<string, Post>>) => {
+  firebase.database().ref(`posts`).orderByChild('slug').equalTo(slug).once('value').then((postsSnapshot: DataSnapshot<Record<string, Post>>) => {
     const posts = postsSnapshot.val();
     const [id] = Object.keys(posts);
     const post = new Post({ id }, posts[id]);
     store.dispatch({ type: Actions.POST_LOADED, post });
 
-    database().ref(`postContent/${post.id}`).once('value').then((postContentSnapshot: DataSnapshot<string>) => {
+    firebase.database().ref(`postContent/${post.id}`).once('value').then((postContentSnapshot: DataSnapshot<string>) => {
       store.dispatch({ type: Actions.POST_CONTENT_LOADED, content: postContentSnapshot.val() });
     });
   });
