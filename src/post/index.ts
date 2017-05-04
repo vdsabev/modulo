@@ -5,11 +5,10 @@ import { AspectRatioContainer } from 'compote/components/aspect-ratio-container'
 import { flex } from 'compote/components/flex';
 import { Model } from 'compote/components/model';
 import { Timeago } from 'compote/components/timeago';
+import * as firebase from 'firebase/app';
 import { route } from 'mithril';
 
-import * as firebase from 'firebase/app';
-import 'firebase/database';
-
+import { DataSnapshot } from '../firebase';
 import { toHTML } from '../marked';
 import { Actions, store } from '../store';
 

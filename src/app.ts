@@ -4,7 +4,7 @@ import './style.scss';
 
 import { mount, redraw } from 'mithril';
 
-import { initializeFirebase } from './firebase';
+import { initializeFirebaseApp } from './firebase';
 import { Header } from './header';
 import { initializeRouter, setRouteIfNew } from './router';
 import { store } from './store';
@@ -12,7 +12,7 @@ import { store } from './store';
 initialize();
 
 function initialize() {
-  initializeFirebase();
+  initializeFirebaseApp();
   registerServiceWorker();
   subscribeToStore();
   initializeRouter();

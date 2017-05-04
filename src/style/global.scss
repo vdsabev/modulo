@@ -33,6 +33,7 @@ a {
   transition: border $animation-duration $animation-easing, color $animation-duration $animation-easing;
 
   border-bottom: 0px solid transparent;
+  cursor: pointer;
   color: $neutral-dark;
 
   &:hover {
@@ -45,6 +46,11 @@ a {
   }
 }
 
+fieldset {
+  border: 0;
+}
+
+// Positioning
 .relative {
   position: relative;
 }
@@ -64,6 +70,7 @@ a {
   left: 0;
 }
 
+// Overflow
 .overflow-hidden {
   @include overflow(hidden, hidden);
 }
