@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "webpack -p --display-modules",
+    "build": "webpack -p --env.production --display-modules",
     "profile:build": "webpack --profile --json > profile.json",
     "profile:open": "webpack-bundle-analyzer profile.json",
     "start": "webpack-dev-server --port 3000 --history-api-fallback",
@@ -17,7 +17,7 @@
     "@types/marked": "0.0.28",
     "@types/mithril": "1.1.1",
     "bootstrap-sass": "3.3.7",
-    "compote": "0.15.1",
+    "compote": "0.16.0",
     "firebase": "3.9.0",
     "marked": "0.3.6",
     "mithril": "1.1.1",

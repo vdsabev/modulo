@@ -10,7 +10,7 @@ export function setRouteIfNew(newRoute: string) {
   }
 }
 
-function applicationLoaded() {
+export function applicationLoaded() {
   store.dispatch({ type: Actions.APPLICATION_LOADED });
 }
 
