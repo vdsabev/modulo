@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const packageJson = require('./package.json');
 
 module.exports = {
+  devtool: 'inline-source-map',
   context: process.cwd(),
   entry: {
     app: './src/app.ts',
@@ -24,12 +25,12 @@ module.exports = {
   },
   module: {
     rules: [
-      // TypeScript
+      // Scripts
       { test: /\.tsx?$/, loader: 'ts-loader' },
 
-      // SASS
+      // Styles
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         use: [
           { loader: 'style-loader' },
           { loader: 'css-loader' },

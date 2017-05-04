@@ -1,26 +1,40 @@
 import { logger } from 'compote/components/logger';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 
-import { Actions } from './actions';
 import { Post } from './post';
 
-export type State = {
-  posts: Post[],
+type State = {
+  /** A dummy property used to trigger a store subscriptions */
+  applicationLoaded: boolean
+  /** Post list */
+  posts: Post[]
+  /** Post details */
   post: Post
 };
 
-const reducers = combineReducers<State>({ posts, post });
+export enum Actions {
+  APPLICATION_LOADED = <any>'APPLICATION_LOADED',
+  RESET_POSTS = <any>'RESET_POSTS',
+  POST_ADDED = <any>'POST_ADDED',
+  POST_LOADED = <any>'POST_LOADED',
+  POST_CONTENT_LOADED = <any>'POST_CONTENT_LOADED'
+}
+
 export const store = createStore(
-  reducers,
+  combineReducers<State>({ applicationLoaded, posts, post }),
   process.env.NODE_ENV === 'production' ? undefined : applyMiddleware(logger)
 );
 
-export type Action = {
-  [key: string]: any;
-  type?: Actions
-};
+export function applicationLoaded(state = false, action: Action<Actions> = {}): boolean {
+  switch (action.type) {
+  case Actions.APPLICATION_LOADED:
+    return true;
+  default:
+    return state;
+  }
+}
 
-export function posts(state: Post[] = [], action: Action = {}): Post[] {
+export function posts(state: Post[] = [], action: Action<Actions> = {}): Post[] {
   switch (action.type) {
   case Actions.RESET_POSTS:
     return [];
@@ -31,7 +45,7 @@ export function posts(state: Post[] = [], action: Action = {}): Post[] {
   }
 }
 
-export function post(state: Post = null, action: Action = {}): Post {
+export function post(state: Post = null, action: Action<Actions> = {}): Post {
   switch (action.type) {
   case Actions.POST_LOADED:
     return action.post;

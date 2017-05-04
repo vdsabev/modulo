@@ -10,3 +10,8 @@ declare var process: {
 };
 
 declare var require: (moduleName: string) => any;
+
+type Action<ActionType> = {
+  [key: string]: any
+  type?: ActionType
+};

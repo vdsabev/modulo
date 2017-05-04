@@ -9,6 +9,7 @@
 
     "baseUrl": "src",
     "module": "commonjs",
+    "sourceMap": true,
     "target": "es5"
   },
   "exclude": [

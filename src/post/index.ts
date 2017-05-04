@@ -10,9 +10,8 @@ import { route } from 'mithril';
 import * as firebase from 'firebase/app';
 import 'firebase/database';
 
-import { Actions } from '../actions';
 import { toHTML } from '../marked';
-import { store } from '../store';
+import { Actions, store } from '../store';
 
 export class Post extends Model<Post> {
   id?: string;

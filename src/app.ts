@@ -14,8 +14,8 @@ initialize();
 function initialize() {
   initializeFirebase();
   registerServiceWorker();
-  initializeRouter();
   subscribeToStore();
+  initializeRouter();
 }
 
 function registerServiceWorker() {
