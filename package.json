@@ -5,26 +5,25 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack -p --env.production --display-modules",
-    "profile:build": "webpack --profile --json > profile.json",
-    "profile:open": "webpack-bundle-analyzer profile.json",
+    "profile:build": "webpack --profile --json > ./build/profile.json",
+    "profile:open": "webpack-bundle-analyzer ./build/profile.json",
     "start": "webpack-dev-server --port 3000 --history-api-fallback",
     "test": "jest",
     "jest": "jest --watch",
     "deploy": "npm test && npm run build && firebase deploy"
   },
   "dependencies": {
-    "@types/es6-promise": "0.0.32",
     "@types/marked": "0.0.28",
     "@types/mithril": "1.1.1",
     "bootstrap-sass": "3.3.7",
-    "compote": "0.16.0",
+    "compote": "0.17.0",
     "firebase": "3.9.0",
     "marked": "0.3.6",
     "mithril": "1.1.1",
     "redux": "3.6.0"
   },
   "devDependencies": {
-    "@types/jest": "19.2.2",
+    "@types/jest": "19.2.3",
     "autoprefixer": "6.7.7",
     "css-loader": "0.27.3",
     "file-loader": "0.10.1",

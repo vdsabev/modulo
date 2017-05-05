@@ -5,7 +5,7 @@ interface MockRoute extends jest.Mock<Route>, Route {}
 const route: MockRoute = <any>jest.fn();
 route.prefix = jest.fn();
 
-jest.mock('mithril', () => ({ route }));
+jest.mock('mithril', () => ({ route, withAttr: jest.fn() }));
 jest.mock('compote/html', jest.fn());
 jest.mock('compote/components/aspect-ratio-container', () => require('compote/components/aspect-ratio-container/index.common.js'));
 jest.mock('compote/components/clock', () => require('compote/components/clock/index.common.js'));

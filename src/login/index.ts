@@ -1,13 +1,14 @@
 import { form, fieldset, input, br, button } from 'compote/html';
 import { Keyboard } from 'compote/components/keyboard';
+import { setFlag } from 'compote/components/utils';
 import * as firebase from 'firebase/app';
-import { route } from 'mithril';
+import { route, withAttr } from 'mithril';
 
 let data: {
-  email?: string,
-  password?: string,
+  email?: string
+  password?: string
   loading?: boolean
-};
+} = {};
 
 export const Login = () => (
   form({
@@ -18,17 +19,13 @@ export const Login = () => (
       input({
         type: 'email', name: 'email', placeholder: 'Email',
         onkeyup: loginOnEnter,
-        oninput(e: Event) {
-          data.email = (<HTMLInputElement>e.currentTarget).value;
-        }
+        oninput: setEmail
       }),
       br(),
       input({
         type: 'password', name: 'password', placeholder: 'Password',
         onkeyup: loginOnEnter,
-        oninput(e: Event) {
-          data.password = (<HTMLInputElement>e.currentTarget).value;
-        }
+        oninput: setPassword
       }),
       br(),
       button({ type: 'submit', onclick: login }, 'Login')
@@ -36,21 +33,19 @@ export const Login = () => (
   )
 );
 
-export const login = () => {
-  data.loading = true;
-  return firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-    .catch((error) => {
-      data.loading = false;
-      console.log(error); // TODO: Rewrite
-    })
-    .then(() => {
-      data.loading = false;
-      route.set('/');
-    });
-};
-
 const loginOnEnter = (e: KeyboardEvent) => {
   if (e.keyCode === Keyboard.ENTER) {
     login();
   }
+};
+
+const setData = (propertyName: keyof typeof data) => (value: any) => data[propertyName] = value;
+const setEmail = withAttr('value', setData('email'));
+const setPassword = withAttr('value', setData('password'));
+
+export const login = () => {
+  const loginPromise = firebase.auth().signInWithEmailAndPassword(data.email, data.password).catch(console.log).then(() => route.set('/'));
+  setFlag(data, 'loading').whileResolving(loginPromise);
+
+  return loginPromise;
 };
