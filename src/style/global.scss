@@ -30,24 +30,35 @@ h6, .h6 { font-size: $h6-font-size; }
 // sass-lint:enable single-line-per-selector
 
 a {
-  transition: border $animation-duration $animation-easing, color $animation-duration $animation-easing;
-
-  border-bottom: 0px solid transparent;
+  transition: color $animation-duration $animation-easing;
   cursor: pointer;
   color: $neutral-dark;
 
+  &:visited {
+    color: $neutral-darker;
+  }
+
   &:hover {
-    border-bottom: 4px solid $primary-light;
     color: $neutral;
   }
 
-  &:visited {
-    color: $neutral-darker;
+  &.underlined {
+    transition: border $animation-duration $animation-easing, color $animation-duration $animation-easing;
+    border-bottom: 0px solid transparent;
+
+    &:hover {
+      border-bottom: 4px solid $primary-light;
+    }
   }
 }
 
 fieldset {
   border: 0;
+}
+
+// Overflow
+.overflow-hidden {
+  @include overflow(hidden, hidden);
 }
 
 // Positioning
@@ -70,7 +81,15 @@ fieldset {
   left: 0;
 }
 
-// Overflow
-.overflow-hidden {
-  @include overflow(hidden, hidden);
+// Text
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }

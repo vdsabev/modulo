@@ -1,3 +1,5 @@
+import './style.scss';
+
 import { a, div } from 'compote/html';
 import * as firebase from 'firebase/app';
 import { route } from 'mithril';
@@ -16,10 +18,12 @@ export const Header = () => {
 };
 
 // Logged in
-const LoggedInHeader = (currentUser: firebase.User) => [
-  div(store.getState().currentUser.email),
-  a({ classList: 'pointer2', onclick: logout }, 'Logout')
-];
+const LoggedInHeader = (currentUser: firebase.User) => (
+  div({ className: 'text-right' }, [
+    div(store.getState().currentUser.email),
+    a({ onclick: logout }, 'Logout')
+  ])
+);
 
 export const logout = () => firebase.auth().signOut().catch(console.log).then(() => route.set('/'));
 

@@ -1,6 +1,6 @@
 import { route } from 'mithril';
 
-import { Login } from '../login';
+import { LoginForm } from '../login';
 import { loadPosts, loadPostBySlug, PostList, PostItem } from '../post';
 import { Actions, store } from '../store';
 
@@ -22,7 +22,7 @@ export function initializeRouter() {
     // TODO: Load application after data is resolved
     '/': { onmatch: loadPosts, render: PostListPage },
     '/posts/:slug': { onmatch: loadPostBySlug, render: PostDetailsPage },
-    '/login': { onmatch: applicationLoaded, render: Login }
+    '/login': { onmatch: applicationLoaded, render: LoginForm }
   });
 }
 

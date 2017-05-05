@@ -19,7 +19,7 @@ jest.mock('compote/components/utils', () => require('compote/components/utils/in
 import { last } from 'compote/components/utils';
 
 import { applicationLoaded, initializeRouter, PostListPage, PostDetailsPage } from './index';
-import { Login } from '../login';
+import { LoginForm } from '../login';
 import { loadPosts, loadPostBySlug } from '../post';
 
 describe(`initializeRouter`, () => {
@@ -46,6 +46,6 @@ describe(`initializeRouter`, () => {
   });
 
   it(`should define login route`, () => {
-    expect(last(route.mock.calls)[2]['/login']).toMatchObject({ onmatch: applicationLoaded, render: Login });
+    expect(last(route.mock.calls)[2]['/login']).toMatchObject({ onmatch: applicationLoaded, render: LoginForm });
   });
 });

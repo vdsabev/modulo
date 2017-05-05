@@ -6,7 +6,7 @@ export const isLocal = (href: string): boolean => href.indexOf(`//${window.locat
 const renderer = new marked.Renderer();
 renderer.link = (href, title, text) => {
   const target = isLocal(href) ? '_self' : '_blank';
-  return `<a target="${target}" href="${href}" title="${title || ''}">${text || ''}</a>`;
+  return `<a class="underlined" target="${target}" href="${href}" title="${title || ''}">${text || ''}</a>`;
 };
 
 export const toHTML = (text: string) => trust(marked(text, { renderer }));
