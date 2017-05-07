@@ -18,7 +18,7 @@ export class Post extends Model<Post> {
   title?: string;
   slug?: string;
   subtitle?: string;
-  created?: number;
+  created?: number | Object;
   content?: string;
 }
 
@@ -34,7 +34,7 @@ export function loadPosts() {
 }
 
 export function loadPostBySlug({ slug }: Record<string, string>) {
-  firebase.database().ref(`posts`).orderByChild('slug').equalTo(slug).once('value').then((postsSnapshot: DataSnapshot<Record<string, Post>>) => {
+  firebase.database().ref('posts').orderByChild('slug').equalTo(slug).once('value').then((postsSnapshot: DataSnapshot<Record<string, Post>>) => {
     const posts = postsSnapshot.val();
     const [id] = Object.keys(posts);
     const post = new Post({ id }, posts[id]);

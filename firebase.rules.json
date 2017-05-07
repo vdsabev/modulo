@@ -6,6 +6,9 @@
     // Posts
     "posts": {
       "$post": {
+        ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.hasChildren(['imageUrl', 'title'])",
+
         "imageUrl": { ".validate": "newData.isString()" },
         "title": { ".validate": "newData.isString()" },
         "slug": { ".validate": "newData.isString()" },
@@ -17,6 +20,15 @@
     // Post Content
     "postContent": {
       "$post": { ".validate": "newData.isString()" }
+    },
+
+    // Users
+    "users": {
+      "$user": {
+        "role": {
+          ".validate": "newData.isString()"
+        }
+      }
     }
   }
 }

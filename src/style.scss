@@ -1,9 +1,11 @@
-@import 'style/reset';
+@import '~compote/style/reset';
+
 @import 'style/global';
 @import 'style/animations';
 @import 'style/variables';
 
-@import '~compote/components/flex/style';
+@import '~compote/style/flex';
+@import '~compote/style/form';
 
 .container {
   margin: 0 auto;

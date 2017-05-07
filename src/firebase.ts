@@ -3,13 +3,14 @@ import 'firebase/auth';
 import 'firebase/database';
 
 import { Actions, store } from './store';
+import { User } from './user';
 
 export interface DataSnapshot<T> extends firebase.database.DataSnapshot {
   val(): T;
 }
 
 export function initializeFirebaseApp() {
-  const app = firebase.initializeApp({
+  firebase.initializeApp({
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
     databaseURL: process.env.FIREBASE_DATABASE_URL,
@@ -18,8 +19,14 @@ export function initializeFirebaseApp() {
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
   });
 
-  firebase.auth().onAuthStateChanged((user: firebase.User) => {
-    const action = user ? Actions.USER_LOGGED_IN : Actions.USER_LOGGED_OUT;
-    store.dispatch({ type: action, user });
+  firebase.auth().onAuthStateChanged((auth: firebase.User) => {
+    const action = auth ? Actions.USER_LOGGED_IN : Actions.USER_LOGGED_OUT;
+    store.dispatch({ type: action, auth });
+
+    if (auth) {
+      firebase.database().ref(`users/${auth.uid}`).once('value').then((userSnapshot: DataSnapshot<User>) => {
+        store.dispatch({ type: Actions.USER_DETAILS_LOADED, user: new User(userSnapshot.val()) });
+      });
+    }
   });
 }
