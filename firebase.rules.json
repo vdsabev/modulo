@@ -19,7 +19,10 @@
 
     // Post Content
     "postContent": {
-      "$post": { ".validate": "newData.isString()" }
+      "$post": {
+        ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.isString()"
+      }
     },
 
     // Users

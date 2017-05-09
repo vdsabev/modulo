@@ -44,6 +44,7 @@ function applicationLoaded() {
   const spinnerView = <HTMLAnchorElement>document.querySelector('#spinner-view');
   spinnerView.classList.add('loaded');
   spinnerView.onclick = (e) => {
+    // TODO: Support ctrl+click
     e.preventDefault();
     setRouteIfNew(spinnerView.getAttribute('href'));
   };

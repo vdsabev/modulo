@@ -1,6 +1,8 @@
+// TODO: Lazy-load chunk
+
 import { form, fieldset, input, br, textarea, button } from 'compote/html';
 import { Keyboard } from 'compote/components/keyboard';
-import { get, when } from 'compote/components/utils';
+import { constant, get, when } from 'compote/components/utils';
 import * as firebase from 'firebase/app';
 import { route, withAttr } from 'mithril';
 
@@ -10,13 +12,21 @@ let data: {
   post?: Post
   content?: string
   loading?: boolean
-} = {};
+} = { post: new Post() };
+
+const initializeData = () => data = { post: new Post() };
+const returnFalse = constant(false);
 
 const setPostData = (propertyName: keyof typeof data.post) => (value: any) => data.post[propertyName] = value;
 const setImageUrl = withAttr('value', setPostData('imageUrl'));
-const setTitle = withAttr('value', setPostData('title'));
+const setTitle = withAttr('value', (title: string) => {
+  data.post.title = title;
+  data.post.slug = suggestedSlug(title);
+});
 const setSlug = withAttr('value', setPostData('slug'));
 const setSubtitle = withAttr('value', setPostData('subtitle'));
+
+const suggestedSlug = (text: string) => (text || '').toLowerCase().split(/[\s\W_]+/g).join('-');
 
 const setData = (propertyName: keyof typeof data) => (value: any) => data[propertyName] = value;
 const setContent = withAttr('value', setData('content'));
@@ -46,37 +56,37 @@ const createPostOnEnter = when(get<KeyboardEvent>('keyCode'), Keyboard.ENTER, cr
 export const PostCreateForm = () => (
   form({
     className: 'form',
-    oncreate: () => data = { post: new Post() },
-    onsubmit: () => false
+    oncreate: initializeData,
+    onsubmit: returnFalse
   },
     fieldset({ className: 'form-panel lg', disabled: data.loading }, [
       input({
         className: 'form-input',
         type: 'text', name: 'imageUrl', placeholder: 'Image URL', required: true,
-        onkeyup: createPostOnEnter, oninput: setImageUrl
+        onkeyup: createPostOnEnter, oninput: setImageUrl, value: data.post.imageUrl
       }),
       input({
         className: 'form-input',
         type: 'text', name: 'title', placeholder: 'Title', required: true,
-        onkeyup: createPostOnEnter, oninput: setTitle
+        onkeyup: createPostOnEnter, oninput: setTitle, value: data.post.title
       }),
       br(),
       input({
         className: 'form-input',
         type: 'text', name: 'slug', placeholder: 'Slug',
-        onkeyup: createPostOnEnter, oninput: setSlug
+        onkeyup: createPostOnEnter, oninput: setSlug, value: data.post.slug
       }),
       br(),
       textarea({
         className: 'form-input',
         name: 'subtitle', placeholder: 'Subtitle', rows: 3,
-        onkeyup: createPostOnEnter, oninput: setSubtitle
+        onkeyup: createPostOnEnter, oninput: setSubtitle, value: data.post.subtitle
       }),
       br(),
       textarea({
         className: 'form-input',
         name: 'content', placeholder: 'Content', rows: 6,
-        onkeyup: createPostOnEnter, oninput: setContent
+        onkeyup: createPostOnEnter, oninput: setContent, value: data.content
       }),
       br(),
       button({ className: 'form-button', type: 'submit', onclick: createPost }, 'Create')
