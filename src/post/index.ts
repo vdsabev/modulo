@@ -9,7 +9,7 @@ import * as firebase from 'firebase/app';
 import { route } from 'mithril';
 
 import { DataSnapshot } from '../firebase';
-import { toHTML } from '../marked';
+import { toHTML } from '../embed';
 import { Actions, store } from '../store';
 
 export class Post extends Model<Post> {
@@ -63,7 +63,7 @@ export const PostItem = (post: Post) => (
         post.created ? small(Timeago(new Date(post.created))) : null
       ])
     ]),
-    post.content ? div({ className: 'post-item-content' }, post.content) : null
+    post.content ? div({ className: 'post-item-content' }, toHTML(post.content)) : null
   ])
 );
 
