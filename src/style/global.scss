@@ -60,6 +60,13 @@ textarea {
   resize: vertical;
 }
 
+// Layout
+.container {
+  margin: 0 auto;
+  width: $sm-max;
+  max-width: 100%;
+}
+
 // Overflow
 .overflow-hidden {
   @include overflow(hidden, hidden);

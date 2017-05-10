@@ -1,18 +1,22 @@
 // TODO: Lazy-load chunk
 
-import { form, fieldset, input, br, textarea, button } from 'compote/html';
+import './style.scss';
+
+import { div, form, fieldset, input, br, textarea, button } from 'compote/html';
 import { Keyboard } from 'compote/components/keyboard';
+import { flex } from 'compote/components/flex';
 import { constant, get, when } from 'compote/components/utils';
 import * as firebase from 'firebase/app';
 import { route, withAttr } from 'mithril';
 
-import { Post } from '../post';
+import { Post, PostItem } from '../post';
 
-let data: {
+let data: Data = { post: new Post() };
+type Data = {
   post?: Post
   content?: string
   loading?: boolean
-} = { post: new Post() };
+};
 
 const initializeData = () => data = { post: new Post() };
 const returnFalse = constant(false);
@@ -51,14 +55,17 @@ const createPost = async () => {
 
 const createPostOnEnter = when(get<KeyboardEvent>('keyCode'), Keyboard.ENTER, createPost);
 
+export const PostCreate = () => (
+  div({ className: 'flex-row justify-content-stretch align-items-stretch', oncreate: initializeData }, [
+    div({ style: flex(1) }, PostCreateForm()),
+    div({ className: 'post-preview', style: flex(1) }, PostItem(new Post({ content: data.content }, data.post)))
+  ])
+);
+
 // TODO: Use form data
 // TODO: Add validation
 export const PostCreateForm = () => (
-  form({
-    className: 'form',
-    oncreate: initializeData,
-    onsubmit: returnFalse
-  },
+  form({ className: 'form', onsubmit: returnFalse },
     fieldset({ className: 'form-panel lg', disabled: data.loading }, [
       input({
         className: 'form-input',

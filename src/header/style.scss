@@ -1,6 +1,6 @@
 @import '../style/variables';
 
-.header {
+#header { // sass-lint:disable-line no-ids
   background: $primary-dark;
   padding: 10px;
   box-sizing: border-box;

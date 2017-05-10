@@ -9,4 +9,4 @@ renderer.link = (href, title, text) => {
   return `<a class="underlined" target="${target}" href="${href}" title="${title || ''}">${text || ''}</a>`;
 };
 
-export const toHTML = (text: string) => trust(marked(text, { renderer }));
+export const toHTML = (text: string) => trust(marked(text || '', { renderer }));

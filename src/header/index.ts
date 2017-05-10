@@ -23,7 +23,7 @@ const LoggedInHeader = (currentUser: User) => (
   div({ className: 'text-right' }, [
     currentUser.canWrite() ? a({ oncreate: route.link, href: '/posts/new' }, 'New Post') : null,
     div(currentUser.auth.email),
-    a({ oncreate: route.link, onclick: logout }, 'Logout')
+    a({ onclick: logout }, 'Logout')
   ])
 );
 

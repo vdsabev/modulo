@@ -14,6 +14,6 @@ export class User extends Model<User> {
   }
 
   canWrite?(): boolean {
-    return this.isLoggedIn() && (this.role === 'writer' || this.role === 'admin');
+    return this.isLoggedIn() && (this.role === 'admin' || this.role === 'writer');
   }
 }

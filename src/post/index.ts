@@ -60,7 +60,7 @@ export const PostItem = (post: Post) => (
       div({ className: 'flex-item', style: flex(1) }, [
         a({ className: 'post-item-title h1', href: `/posts/${post.slug}`, oncreate: route.link }, toHTML(post.title)),
         div({ className: 'post-item-subtitle' }, toHTML(post.subtitle)),
-        small(Timeago(new Date(post.created)))
+        post.created ? small(Timeago(new Date(post.created))) : null
       ])
     ]),
     post.content ? div({ className: 'post-item-content' }, post.content) : null
@@ -68,7 +68,13 @@ export const PostItem = (post: Post) => (
 );
 
 export const PostList = (posts: Post[]) => (
-  section({ className: 'post-list' },
+  section({ className: 'post-list container' },
     posts.map(PostItem)
+  )
+);
+
+export const PostDetails = (post: Post) => (
+  div({ className: 'container' },
+    PostItem(post)
   )
 );

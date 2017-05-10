@@ -1,4 +1,4 @@
-import { form, fieldset, input, br, button } from 'compote/html';
+import { div, form, fieldset, input, br, button } from 'compote/html';
 import { Keyboard } from 'compote/components/keyboard';
 import { get, setFlag, when } from 'compote/components/utils';
 import * as firebase from 'firebase/app';
@@ -45,4 +45,8 @@ export const LoginForm = () => (
       button({ className: 'form-button', type: 'submit', onclick: login }, 'Login')
     ])
   )
+);
+
+export const Login = () => (
+  div({ className: 'container' }, LoginForm())
 );

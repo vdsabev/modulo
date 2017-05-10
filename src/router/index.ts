@@ -1,9 +1,9 @@
 import { route } from 'mithril';
 
 import { Forbidden } from '../403-forbidden';
-import { LoginForm } from '../login';
-import { loadPosts, loadPostBySlug, PostList, PostItem } from '../post';
-import { PostCreateForm } from '../post-create';
+import { Login } from '../login';
+import { loadPosts, loadPostBySlug, PostList, PostDetails } from '../post';
+import { PostCreate } from '../post-create';
 import { Actions, store } from '../store';
 
 export function setRouteIfNew(newRoute: string) {
@@ -22,11 +22,10 @@ export function initializeRouter() {
 
   const container = document.querySelector('#container');
   route(container, '/', {
-    // TODO: Load application after data is resolved
     '/': { onmatch: loadPosts, render: PostListPage },
     '/posts/new': { render: PostCreatePage },
     '/posts/:slug': { onmatch: loadPostBySlug, render: PostDetailsPage },
-    '/login': { onmatch: applicationLoaded, render: LoginForm }
+    '/login': { render: Login }
   });
 }
 
@@ -35,13 +34,9 @@ export const PostListPage = () => {
   return PostList(posts);
 };
 
-export const PostCreatePage = requireWriterAccess(PostCreateForm);
+export const PostCreatePage = requireWriterAccess(PostCreate);
 
 export const PostDetailsPage = () => {
   const { post } = store.getState();
-  return PostItem(post);
+  return PostDetails(post);
 };
-
-export function applicationLoaded() {
-  store.dispatch({ type: Actions.APPLICATION_LOADED });
-}

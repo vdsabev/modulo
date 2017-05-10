@@ -5,8 +5,6 @@ import { Post } from './post';
 import { User } from './user';
 
 type State = {
-  /** A dummy property used to trigger a store subscriptions */
-  applicationLoaded: boolean
   /** Post list */
   posts: Post[]
   /** Post details */
@@ -16,8 +14,6 @@ type State = {
 };
 
 export enum Actions {
-  APPLICATION_LOADED = <any>'APPLICATION_LOADED',
-
   RESET_POSTS = <any>'RESET_POSTS',
   POST_ADDED = <any>'POST_ADDED',
 
@@ -30,18 +26,9 @@ export enum Actions {
 }
 
 export const store = createStore(
-  combineReducers<State>({ applicationLoaded, posts, post, currentUser }),
+  combineReducers<State>({ posts, post, currentUser }),
   process.env.NODE_ENV === 'production' ? undefined : applyMiddleware(logger)
 );
-
-export function applicationLoaded(state = false, action: Action<Actions> = {}): boolean {
-  switch (action.type) {
-  case Actions.APPLICATION_LOADED:
-    return true;
-  default:
-    return state;
-  }
-}
 
 export function posts(state: Post[] = [], action: Action<Actions> = {}): Post[] {
   switch (action.type) {
