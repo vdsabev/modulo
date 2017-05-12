@@ -1,9 +1,10 @@
 import { route } from 'mithril';
+import { voidify } from 'compote/components/utils';
 
 import { Forbidden } from '../403-forbidden';
 import { Login } from '../login';
 import { loadPosts, loadPostBySlug, PostList, PostDetails } from '../post';
-import { PostCreate } from '../post-create';
+import { PostCreate } from '../post-form';
 import { Actions, store } from '../store';
 
 export function setRouteIfNew(newRoute: string) {
@@ -24,7 +25,7 @@ export function initializeRouter() {
   route(container, '/', {
     '/': { onmatch: loadPosts, render: PostListPage },
     '/posts/new': { render: PostCreatePage },
-    '/posts/:slug': { onmatch: loadPostBySlug, render: PostDetailsPage },
+    '/posts/:slug': { onmatch: loadPostDetails, render: PostDetailsPage },
     '/login': { render: Login }
   });
 }
@@ -36,6 +37,7 @@ export const PostListPage = () => {
 
 export const PostCreatePage = requireWriterAccess(PostCreate);
 
+export const loadPostDetails = voidify(loadPostBySlug);
 export const PostDetailsPage = () => {
   const { post } = store.getState();
   return PostDetails(post);

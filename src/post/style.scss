@@ -17,4 +17,13 @@
 
 .post-item-content {
   margin: 5px;
+
+  // sass-lint:disable single-line-per-selector
+  h1, .h1,
+  h2, .h2,
+  h3, .h3,
+  p {
+    margin-bottom: 10px;
+  }
+  // sass-lint:enable single-line-per-selector
 }

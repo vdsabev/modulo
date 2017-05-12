@@ -33,17 +33,18 @@ export function loadPosts() {
   });
 }
 
-export function loadPostBySlug({ slug }: Record<string, string>) {
-  firebase.database().ref('posts').orderByChild('slug').equalTo(slug).once('value').then((postsSnapshot: DataSnapshot<Record<string, Post>>) => {
-    const posts = postsSnapshot.val();
-    const [id] = Object.keys(posts);
-    const post = new Post({ id }, posts[id]);
-    store.dispatch({ type: Actions.POST_LOADED, post });
+export async function loadPostBySlug({ slug }: Record<string, string>) {
+  const postsPromise = firebase.database().ref('posts').orderByChild('slug').equalTo(slug).once('value');
+  const postsSnapshot: DataSnapshot<Record<string, Post>> = await postsPromise.catch(console.error);
+  const posts = postsSnapshot.val();
+  const [id] = Object.keys(posts);
+  const post = new Post({ id }, posts[id]);
+  store.dispatch({ type: Actions.POST_LOADED, post });
 
-    firebase.database().ref(`postContent/${post.id}`).once('value').then((postContentSnapshot: DataSnapshot<string>) => {
-      store.dispatch({ type: Actions.POST_CONTENT_LOADED, content: postContentSnapshot.val() });
-    });
-  });
+  const contentPromise = firebase.database().ref(`postContent/${post.id}`).once('value');
+  const contentSnapshot: DataSnapshot<string> = await contentPromise.catch(console.error);
+  const content = contentSnapshot.val();
+  store.dispatch({ type: Actions.POST_CONTENT_LOADED, content });
 }
 
 export const PostItem = (post: Post) => (

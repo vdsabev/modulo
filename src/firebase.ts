@@ -19,14 +19,13 @@ export function initializeFirebaseApp() {
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
   });
 
-  firebase.auth().onAuthStateChanged((auth: firebase.User) => {
+  firebase.auth().onAuthStateChanged(async (auth: firebase.User) => {
     const action = auth ? Actions.USER_LOGGED_IN : Actions.USER_LOGGED_OUT;
     store.dispatch({ type: action, auth });
 
-    if (auth) {
-      firebase.database().ref(`users/${auth.uid}`).once('value').then((userSnapshot: DataSnapshot<User>) => {
-        store.dispatch({ type: Actions.USER_DETAILS_LOADED, user: new User(userSnapshot.val()) });
-      });
-    }
+    if (!auth) return;
+
+    const userSnapshot: DataSnapshot<User> = await firebase.database().ref(`users/${auth.uid}`).once('value').catch(console.error);
+    store.dispatch({ type: Actions.USER_DETAILS_LOADED, user: new User(userSnapshot.val()) });
   });
 }

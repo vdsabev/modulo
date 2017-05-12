@@ -16,9 +16,9 @@ jest.mock('compote/components/model', () => require('compote/components/model/in
 jest.mock('compote/components/timeago', () => require('compote/components/timeago/index.common.js'));
 jest.mock('compote/components/utils', () => require('compote/components/utils/index.common.js'));
 
-import { last } from 'compote/components/utils';
+import { last, voidify } from 'compote/components/utils';
 
-import { initializeRouter, PostListPage, PostDetailsPage } from './index';
+import { initializeRouter, PostListPage, loadPostDetails, PostDetailsPage } from './index';
 import { Login } from '../login';
 import { loadPosts, loadPostBySlug } from '../post';
 
@@ -42,7 +42,7 @@ describe(`initializeRouter`, () => {
   });
 
   it(`should define post details route`, () => {
-    expect(last(route.mock.calls)[2]['/posts/:slug']).toMatchObject({ onmatch: loadPostBySlug, render: PostDetailsPage });
+    expect(last(route.mock.calls)[2]['/posts/:slug']).toMatchObject({ onmatch: loadPostDetails, render: PostDetailsPage });
   });
 
   it(`should define login route`, () => {

@@ -1,6 +1,6 @@
 import { div, form, fieldset, input, br, button } from 'compote/html';
 import { Keyboard } from 'compote/components/keyboard';
-import { get, setFlag, when } from 'compote/components/utils';
+import { get, setFlag, when, equal } from 'compote/components/utils';
 import * as firebase from 'firebase/app';
 import { route, withAttr } from 'mithril';
 
@@ -19,7 +19,7 @@ const login = () => {
   setFlag(data, 'loading').whileAwaiting(promise).catch(console.error).then(() => route.set('/'));
 };
 
-const loginOnEnter = when(get<KeyboardEvent>('keyCode'), Keyboard.ENTER, login);
+const loginOnEnter = when(equal(get<KeyboardEvent>('keyCode'), Keyboard.ENTER), login);
 
 // TODO: Use form data
 // TODO: Add validation
