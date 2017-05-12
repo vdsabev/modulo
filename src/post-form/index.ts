@@ -30,7 +30,7 @@ const setTitle = withAttr('value', (title: string) => {
 const setSlug = withAttr('value', setPostData('slug'));
 const setSubtitle = withAttr('value', setPostData('subtitle'));
 
-const suggestedSlug = (text: string) => (text || '').toLowerCase().split(/[\s\W_]+/g).join('-');
+const suggestedSlug = (text: string) => (text || '').replace(/(\d+)%/g, '\\$1-percent').toLowerCase().split(/[\s\W_]+/g).join('-');
 
 const setData = (propertyName: keyof typeof data) => (value: any) => data[propertyName] = value;
 const setContent = withAttr('value', setData('content'));
