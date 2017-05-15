@@ -1,6 +1,6 @@
 import './style.scss';
 
-import { a, div } from 'compote/html';
+import { div, a, br } from 'compote/html';
 import * as firebase from 'firebase/app';
 import { route } from 'mithril';
 
@@ -19,13 +19,17 @@ export const Header = () => {
 };
 
 // Logged in
-const LoggedInHeader = (currentUser: User) => (
+const LoggedInHeader = (currentUser: User) => [
+  currentUser.canWrite() ? div({ style: { 'margin-right': 'auto' } }, [
+    a({ oncreate: route.link, href: '/posts/new' }, '+ New Post'),
+    br(),
+    a({ target: '_blank', href: `https://console.firebase.google.com/project/${process.env.FIREBASE_PROJECT_ID}/database/data` }, '+ Edit Data')
+  ]) : null,
   div({ className: 'text-right' }, [
-    currentUser.canWrite() ? a({ oncreate: route.link, href: '/posts/new' }, 'New Post') : null,
     div(currentUser.auth.email),
     a({ onclick: logout }, 'Logout')
   ])
-);
+];
 
 export const logout = () => firebase.auth().signOut().catch(console.error).then(() => route.set('/'));
 

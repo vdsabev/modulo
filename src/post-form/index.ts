@@ -5,7 +5,7 @@ import './style.scss';
 import { div, form, fieldset, input, br, textarea, button } from 'compote/html';
 import { Keyboard } from 'compote/components/keyboard';
 import { flex } from 'compote/components/flex';
-import { constant, get, when, equal } from 'compote/components/utils';
+import { constant } from 'compote/components/utils';
 import * as firebase from 'firebase/app';
 import { route, withAttr } from 'mithril';
 
@@ -30,7 +30,13 @@ const setTitle = withAttr('value', (title: string) => {
 const setSlug = withAttr('value', setPostData('slug'));
 const setSubtitle = withAttr('value', setPostData('subtitle'));
 
-const suggestedSlug = (text: string) => (text || '').replace(/(\d+)%/g, '\\$1-percent').toLowerCase().split(/[\s\W_]+/g).join('-');
+const suggestedSlug = (text: string) => (
+  (text || '')
+    .replace(`'`, '')
+    .replace(/(\d+)%/g, '\\$1-percent')
+    .replace(/[\s\W_]+/g, '-')
+    .toLowerCase()
+);
 
 const setData = (propertyName: keyof typeof data) => (value: any) => data[propertyName] = value;
 const setContent = withAttr('value', setData('content'));
@@ -54,8 +60,6 @@ const createPost = async () => {
   }
 };
 
-const createPostOnEnter = when(equal(get<KeyboardEvent>('keyCode'), Keyboard.ENTER), createPost);
-
 export const PostCreate = () => (
   div({ className: 'flex-row justify-content-stretch align-items-stretch', oncreate: initializeData }, [
     div({ style: flex(1) }, PostForm()),
@@ -71,28 +75,24 @@ export const PostForm = () => (
       input({
         className: 'form-input',
         type: 'text', name: 'imageUrl', placeholder: 'Image URL', required: true,
-        value: data.post.imageUrl, oninput: setImageUrl,
-        onkeyup: createPostOnEnter
+        value: data.post.imageUrl, oninput: setImageUrl
       }),
       input({
         className: 'form-input',
         type: 'text', name: 'title', placeholder: 'Title', required: true,
-        value: data.post.title, oninput: setTitle,
-        onkeyup: createPostOnEnter
+        value: data.post.title, oninput: setTitle
       }),
       br(),
       input({
         className: 'form-input',
         type: 'text', name: 'slug', placeholder: 'Slug',
-        value: data.post.slug, oninput: setSlug,
-        onkeyup: createPostOnEnter
+        value: data.post.slug, oninput: setSlug
       }),
       br(),
       textarea({
         className: 'form-input',
         name: 'subtitle', placeholder: 'Subtitle', rows: 3,
-        value: data.post.subtitle, oninput: setSubtitle,
-        onkeyup: createPostOnEnter
+        value: data.post.subtitle, oninput: setSubtitle
       }),
       br(),
       textarea({
