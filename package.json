@@ -7,7 +7,7 @@
     "build": "webpack -p --env.production --display-modules",
     "profile:build": "webpack --profile --json > ./build/profile.json",
     "profile:open": "webpack-bundle-analyzer ./build/profile.json",
-    "start": "webpack-dev-server --port 3000 --history-api-fallback",
+    "start": "concurrently -k \"npm run sync\" \"webpack-dev-server --port 3000 --history-api-fallback\"",
     "test": "jest",
     "jest": "jest --watch",
     "deploy": "npm test && npm run build && firebase deploy",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/jest": "19.2.3",
     "autoprefixer": "7.1.1",
+    "concurrently": "3.4.0",
     "css-loader": "0.28.2",
     "file-loader": "0.11.1",
     "firebase-tools": "3.9.0",
