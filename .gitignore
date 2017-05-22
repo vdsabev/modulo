@@ -1,5 +1,7 @@
+.gitignore
 build
 coverage
 node_modules
+posts/*.json
 src/google*.html
 *.log

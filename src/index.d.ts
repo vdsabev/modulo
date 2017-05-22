@@ -1,9 +1,7 @@
-declare var process: {
-  VERSION: string
-  env: Record<string, any>
-};
-
-declare var require: (moduleName: string) => any;
+interface Process {
+  VERSION: string;
+  env: Record<string, any>;
+}
 
 type Action<ActionType> = {
   [key: string]: any
