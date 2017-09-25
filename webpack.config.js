@@ -1,23 +1,31 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const env = require('var');
+const { define } = require('var/webpack');
 
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NullPlugin = require('webpack-null-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
-const packageJson = require('./package.json');
+const BUILD_DIR = './build';
 
-module.exports = (options) => ({
-  devtool: options && options.production ? false : 'inline-source-map',
+const dependencies = require('./package.json').dependencies;
+const vendor = Object.keys(dependencies).filter((dependency) => dependency.indexOf('@types/') === -1);
+
+module.exports = ({ production } = {}) => ({
+  devtool: production ? false : 'inline-source-map',
   context: process.cwd(),
   entry: {
     app: './src/app.ts',
-    'service-worker': './src/service-worker.ts'
+    vendor
   },
   output: {
     publicPath: '/',
-    path: path.resolve('./build'),
-    filename: '[name].js',
+    path: path.resolve(BUILD_DIR),
+    filename: '[name].[chunkhash].js',
     sourceMapFilename: '[name].js.map'
   },
   resolve: {
@@ -31,12 +39,10 @@ module.exports = (options) => ({
       // Styles
       {
         test: /\.s?css$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' }
-        ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader']
+        })
       },
 
       // Assets
@@ -47,10 +53,11 @@ module.exports = (options) => ({
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.VERSION': JSON.stringify(packageJson.version),
-      'process.env': JSON.stringify(env)
-    }),
+    production ? new CleanWebpackPlugin([`${BUILD_DIR}/*`]) : new NullPlugin(),
+
+    new webpack.optimize.CommonsChunkPlugin('vendor'),
+    new webpack.optimize.ModuleConcatenationPlugin(),
+    new webpack.DefinePlugin(define(env, (envJsonKeys) => ['NODE_ENV', ...envJsonKeys])),
     new webpack.LoaderOptionsPlugin({
       options: {
         postcss: () => [
@@ -58,6 +65,14 @@ module.exports = (options) => ({
         ]
       }
     }),
-    new HtmlWebpackPlugin({ template: './src/index.ejs' })
+
+    // `contenthash` is specific to this plugin, we would typically use `chunkhash`
+    new ExtractTextPlugin('styles.[contenthash].css'),
+    new HtmlWebpackPlugin({ template: './src/index.ejs' }),
+    new WorkboxPlugin({
+      globDirectory: BUILD_DIR,
+      globPatterns: ['**/*.{html,js,css}'],
+      swDest: path.resolve(BUILD_DIR, 'service-worker.js')
+    })
   ]
 });

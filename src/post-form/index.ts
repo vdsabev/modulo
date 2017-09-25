@@ -61,47 +61,47 @@ const createPost = async () => {
 };
 
 export const PostCreate = () => (
-  div({ className: 'flex-row justify-content-stretch align-items-stretch', oncreate: initializeData }, [
+  div({ class: 'flex-row justify-content-stretch align-items-stretch', oncreate: initializeData }, [
     div({ style: flex(1) }, PostForm()),
-    div({ className: 'post-preview', style: flex(1) }, PostItem(new Post({ content: data.content }, data.post)))
+    div({ class: 'post-preview', style: flex(1) }, PostItem(new Post({ content: data.content }, data.post)))
   ])
 );
 
 // TODO: Use form data
 // TODO: Add validation
 export const PostForm = () => (
-  form({ className: 'form', onsubmit: returnFalse },
-    fieldset({ className: 'form-panel lg', disabled: data.loading }, [
+  form({ class: 'form', onsubmit: returnFalse },
+    fieldset({ class: 'form-panel lg', disabled: data.loading }, [
       input({
-        className: 'form-input',
+        class: 'form-input',
         type: 'text', name: 'imageUrl', placeholder: 'Image URL', required: true,
         value: data.post.imageUrl, oninput: setImageUrl
       }),
       input({
-        className: 'form-input',
+        class: 'form-input',
         type: 'text', name: 'title', placeholder: 'Title', required: true,
         value: data.post.title, oninput: setTitle
       }),
       br(),
       input({
-        className: 'form-input',
+        class: 'form-input',
         type: 'text', name: 'slug', placeholder: 'Slug',
         value: data.post.slug, oninput: setSlug
       }),
       br(),
       textarea({
-        className: 'form-input',
+        class: 'form-input',
         name: 'subtitle', placeholder: 'Subtitle', rows: 3,
         value: data.post.subtitle, oninput: setSubtitle
       }),
       br(),
       textarea({
-        className: 'form-input',
+        class: 'form-input',
         name: 'content', placeholder: 'Content', rows: 15,
         value: data.content, oninput: setContent
       }),
       br(),
-      button({ className: 'form-button', type: 'submit', onclick: createPost }, 'Create')
+      button({ class: 'form-button', type: 'submit', onclick: createPost }, 'Create')
     ])
   )
 );

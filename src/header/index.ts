@@ -20,12 +20,12 @@ export const Header = () => {
 
 // Logged in
 const LoggedInHeader = (currentUser: User) => [
-  currentUser.canWrite() ? div({ style: { 'margin-right': 'auto' } }, [
+  currentUser.canWrite() ? div({ style: { marginRight: 'auto' } }, [
     a({ oncreate: route.link, href: '/posts/new' }, '+ New Post'),
     br(),
     a({ target: '_blank', href: `https://console.firebase.google.com/project/${process.env.FIREBASE_PROJECT_ID}/database/data` }, '+ Edit Data')
   ]) : null,
-  div({ className: 'text-right' }, [
+  div({ class: 'text-right' }, [
     div(currentUser.auth.email),
     a({ onclick: logout }, 'Logout')
   ])

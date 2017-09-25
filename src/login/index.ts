@@ -1,6 +1,6 @@
 import { div, form, fieldset, input, br, button } from 'compote/html';
 import { Keyboard } from 'compote/components/keyboard';
-import { get, setFlag, when, equal } from 'compote/components/utils';
+import { get, when, equal } from 'compote/components/utils';
 import * as firebase from 'firebase/app';
 import { route, withAttr } from 'mithril';
 
@@ -14,9 +14,16 @@ const setData = (propertyName: keyof typeof data) => (value: any) => data[proper
 const setEmail = withAttr('value', setData('email'));
 const setPassword = withAttr('value', setData('password'));
 
-const login = () => {
-  const promise = firebase.auth().signInWithEmailAndPassword(data.email, data.password);
-  setFlag(data, 'loading').whileAwaiting(promise).catch(console.error).then(() => route.set('/'));
+const login = async () => {
+  data.loading = true;
+  try {
+    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+    route.set('/');
+  }
+  catch (error) {
+    console.error(error);
+  }
+  data.loading = false;
 };
 
 const loginOnEnter = when(equal(get<KeyboardEvent>('keyCode'), Keyboard.ENTER), login);
@@ -25,28 +32,28 @@ const loginOnEnter = when(equal(get<KeyboardEvent>('keyCode'), Keyboard.ENTER), 
 // TODO: Add validation
 export const LoginForm = () => (
   form({
-    className: 'form',
+    class: 'form',
     oncreate: () => data = {},
     onsubmit: () => false
   },
-    fieldset({ className: 'form-panel', disabled: data.loading }, [
+    fieldset({ class: 'form-panel', disabled: data.loading }, [
       input({
-        className: 'form-input',
+        class: 'form-input',
         type: 'email', name: 'email', placeholder: 'Email',
         onkeyup: loginOnEnter, oninput: setEmail
       }),
       br(),
       input({
-        className: 'form-input',
+        class: 'form-input',
         type: 'password', name: 'password', placeholder: 'Password',
         onkeyup: loginOnEnter, oninput: setPassword
       }),
       br(),
-      button({ className: 'form-button', type: 'submit', onclick: login }, 'Login')
+      button({ class: 'form-button', type: 'submit', onclick: login }, 'Login')
     ])
   )
 );
 
 export const Login = () => (
-  div({ className: 'container' }, LoginForm())
+  div({ class: 'container' }, LoginForm())
 );

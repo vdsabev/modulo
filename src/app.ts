@@ -2,16 +2,18 @@ import './assets/logo.png';
 import './manifest.json';
 import './style.scss';
 
-import { mount, redraw } from 'mithril';
+import { setHyperscriptFunction } from 'compote';
+import * as m from 'mithril';
 
 import { initializeFirebaseApp } from './firebase';
 import { Header } from './header';
 import { initializeRouter, setRouteIfNew } from './router';
 import { store } from './store';
 
-initialize();
+setHyperscriptFunction(m);
+initializeApp();
 
-function initialize() {
+function initializeApp() {
   initializeFirebaseApp();
   registerServiceWorker();
   subscribeToStore();
@@ -25,7 +27,7 @@ function registerServiceWorker() {
 }
 
 function subscribeToStore() {
-  store.subscribe(redraw);
+  store.subscribe(m.redraw);
 
   const unsubscribeContainers = store.subscribe(() => {
     applicationLoaded();
@@ -38,7 +40,7 @@ function applicationLoaded() {
   const header = document.querySelector('#header');
   header.classList.add('loaded');
 
-  mount(header, { view: Header });
+  m.mount(header, { view: Header });
 
   // Spinner
   const spinnerView = <HTMLAnchorElement>document.querySelector('#spinner-view');

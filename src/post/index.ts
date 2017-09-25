@@ -49,33 +49,33 @@ export async function loadPostBySlug({ slug }: Record<string, string>) {
 
 export const PostItem = (post: Post) => (
   post == null ? null :
-  article({ key: post.id, className: 'post-item fade-in-animation' }, [
-    div({ className: 'flex-row-md justify-content-start align-items-stretch' }, [
-      div({ className: 'flex-item', style: flex(1) },
-        AspectRatioContainer({ x: 4, y: 3 },
+  article({ key: post.id, class: 'post-item fade-in-animation' }, [
+    div({ class: 'flex-row-md justify-content-start align-items-stretch' }, [
+      div({ class: 'flex-item', style: flex(1) },
+        AspectRatioContainer({ aspectRatio: { x: 4, y: 3 } },
           // NOTE: The img tag needs to be wrapped with a div, otherwise the flex box breaks in Chrome
           // http://codepen.io/vdsabev/pen/mWjpXN
-          img({ className: 'absolute stretch', src: post.imageUrl })
+          img({ class: 'absolute stretch', src: post.imageUrl })
         )
       ),
-      div({ className: 'flex-item', style: flex(1) }, [
-        a({ className: 'post-item-title h1', href: `/posts/${post.slug}`, oncreate: route.link }, toHTML(post.title)),
-        div({ className: 'post-item-subtitle' }, toHTML(post.subtitle)),
+      div({ class: 'flex-item', style: flex(1) }, [
+        a({ class: 'post-item-title h1', href: `/posts/${post.slug}`, oncreate: route.link }, toHTML(post.title)),
+        div({ class: 'post-item-subtitle' }, toHTML(post.subtitle)),
         post.created ? small(Timeago(new Date(post.created))) : null
       ])
     ]),
-    post.content ? div({ className: 'post-item-content' }, toHTML(post.content)) : null
+    post.content ? div({ class: 'post-item-content' }, toHTML(post.content)) : null
   ])
 );
 
 export const PostList = (posts: Post[]) => (
-  section({ className: 'post-list container' },
+  section({ class: 'post-list container' },
     posts.map(PostItem)
   )
 );
 
 export const PostDetails = (post: Post) => (
-  div({ className: 'container' },
+  div({ class: 'container' },
     PostItem(post)
   )
 );
