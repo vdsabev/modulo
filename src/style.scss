@@ -1,17 +1,8 @@
-@import 'style/reset';
+@import '~compote/style/reset';
+
 @import 'style/global';
 @import 'style/animations';
 @import 'style/variables';
 
-@import '~compote/components/flex/style';
-
-// sass-lint:disable no-ids
-#container {
-  margin: 0 auto;
-  width: $sm-max;
-  max-width: 100%;
-}
-
-#header {
-  background: $primary-dark;
-}
+@import '~compote/style/flex';
+@import '~compote/style/form';

@@ -2,22 +2,22 @@ import './assets/logo.png';
 import './manifest.json';
 import './style.scss';
 
-import { redraw } from 'mithril';
+import { setHyperscriptFunction } from 'compote';
+import * as m from 'mithril';
 
-import { initializeFirebase } from './firebase';
+import { initializeFirebaseApp } from './firebase';
+import { Header } from './header';
 import { initializeRouter, setRouteIfNew } from './router';
 import { store } from './store';
 
-const header = document.querySelector('#header');
-const spinnerView = <HTMLAnchorElement>document.querySelector('#spinner-view');
+setHyperscriptFunction(m);
+initializeApp();
 
-initialize();
-
-function initialize() {
-  initializeFirebase();
+function initializeApp() {
+  initializeFirebaseApp();
   registerServiceWorker();
-  initializeRouter();
   subscribeToStore();
+  initializeRouter();
 }
 
 function registerServiceWorker() {
@@ -27,7 +27,7 @@ function registerServiceWorker() {
 }
 
 function subscribeToStore() {
-  store.subscribe(redraw);
+  store.subscribe(m.redraw);
 
   const unsubscribeContainers = store.subscribe(() => {
     applicationLoaded();
@@ -36,10 +36,17 @@ function subscribeToStore() {
 }
 
 function applicationLoaded() {
+  // Header
+  const header = document.querySelector('#header');
   header.classList.add('loaded');
-  spinnerView.classList.add('loaded');
 
+  m.mount(header, { view: Header });
+
+  // Spinner
+  const spinnerView = <HTMLAnchorElement>document.querySelector('#spinner-view');
+  spinnerView.classList.add('loaded');
   spinnerView.onclick = (e) => {
+    // TODO: Support ctrl+click
     e.preventDefault();
     setRouteIfNew(spinnerView.getAttribute('href'));
   };

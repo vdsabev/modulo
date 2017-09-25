@@ -1,6 +1,0 @@
-export enum Actions {
-  RESET_POSTS = <any>'RESET_POSTS',
-  POST_ADDED = <any>'POST_ADDED',
-  POST_LOADED = <any>'POST_LOADED',
-  POST_CONTENT_LOADED = <any>'POST_CONTENT_LOADED'
-}

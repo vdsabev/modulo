@@ -5,11 +5,12 @@
     "experimentalDecorators": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
+    "sourceMap": true,
     "suppressImplicitAnyIndexErrors": false,
 
     "baseUrl": "src",
     "module": "commonjs",
-    "target": "ES5"
+    "target": "es5"
   },
   "exclude": [
     "node_modules"

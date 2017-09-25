@@ -10,7 +10,10 @@
     <meta content="320" name="MobileOptimized">
     <meta content="on" http-equiv="cleartype">
 
-    <% // Spinner %>
+    <base href="/">
+    <link rel="shortcut icon" href="logo.png">
+    <link rel="manifest" href="manifest.json">
+
     <style>
       <%
         const primary = '#2c3e50';
@@ -108,26 +111,20 @@
       <% }); %>
     </style>
 
-    <base href="/">
-    <link rel="shortcut icon" href="logo.png">
-    <link rel="manifest" href="manifest.json">
     <link href="https://fonts.googleapis.com/css?family=Oswald|PT+Serif&amp;subset=cyrillic" rel="stylesheet">
   </head>
 
   <body>
     <div id="container"></div>
 
-    <header id="header">
-      <a id="spinner-view" href="/" onclick="event.preventDefault();">
-        <svg id="spinner" viewBox="0, 0, 200, 100">
-          <text id="logo" x="0" y="75" font-size="72" font-family="sans-serif">
-            mod 1
-          </text>
-        </svg>
-      </a>
-    </header>
+    <header id="header" class="flex-row justify-content-end align-items-center"></header>
 
-    <% // Firebase %>
-    <script src="https://www.gstatic.com/firebasejs/3.8.0/firebase.js"></script>
+    <a id="spinner-view" href="/" onclick="event.preventDefault();">
+      <svg id="spinner" viewBox="0, 0, 200, 100">
+        <text id="logo" x="0" y="75" font-size="72" font-family="sans-serif">
+          mod 1
+        </text>
+      </svg>
+    </a>
   </body>
 </html>

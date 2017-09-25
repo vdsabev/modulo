@@ -1,0 +1,11 @@
+# Example configuration
+plugins:
+  firebase:
+    keyFilename: posts/firebase.json
+    databaseURL: https://modulo-one.firebaseio.com
+
+events:
+  - for:
+      file: posts/:postId/content.md
+    do:
+      firebase: postContent/:postId

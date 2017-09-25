@@ -1,13 +1,9 @@
-declare var firebase: any;
+interface Process {
+  VERSION: string;
+  env: Record<string, any>;
+}
 
-type FirebaseSnapshot<T> = {
-  key: string
-  val(): T;
+type Action<ActionType> = {
+  [key: string]: any
+  type?: ActionType
 };
-
-declare var process: {
-  VERSION: string
-  env: Record<string, any>
-};
-
-declare var require: (moduleName: string) => any;
